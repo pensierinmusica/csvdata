@@ -7,24 +7,28 @@ var colors = require('colors');
 
 module.exports = {
   load: function (path, objname) {
-    console.log(("Reading data from " + path).yellow);
+    console.log('Reading data from: '.yellow + path);
     return Q.nfcall(fs.readFile, path, {encoding: 'utf8'}).then(function (data) {
-      console.log("Parsing data".yellow);
-      var parseOpts = {
-        auto_parse: true,
-        columns: true,
-        objname: objname || false,
-        skip_empty_lines: true
+      if (data) {
+        console.log('Parsing data'.yellow);
+        var parseOpts = {
+          auto_parse: true,
+          columns: true,
+          objname: objname || false,
+          skip_empty_lines: true
+        }
+        return Q.nfcall(csv.parse, data, parseOpts).then(function (data) {
+          console.log('Data parsed'.green);
+          return data
+        })
+      } else {
+        console.log('File appears to be empty!'.yellow);
       }
-      return Q.nfcall(csv.parse, data, parseOpts)
-    }).then(function (data) {
-      console.log("Data parsed".green);
-      return data
     })
   },
   write: function (path, data, header) {
     var ws = fs.createWriteStream(path);
-    console.log(("Writing data to " + path).yellow);
+    console.log(('Writing data to ' + path).yellow);
     var hlen; // Used to compute number of CSV columns
     if (header) {
       if (typeof header === 'string') {
@@ -129,6 +133,6 @@ module.exports = {
                       (see documentation for further details)\n');
     }
     ws.end();
-    console.log("Data written".green);
+    console.log('Data written'.green);
   }
 };
