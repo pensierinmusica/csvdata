@@ -7,10 +7,10 @@ var colors = require('colors');
 
 module.exports = {
   load: function (path, objname) {
-    console.log('Reading data from: '.yellow + path);
+    console.log('Reading data from '.yellow + path);
     return Q.nfcall(fs.readFile, path, {encoding: 'utf8'}).then(function (data) {
       if (data) {
-        console.log('Parsing data'.yellow);
+        console.log('Parsing data...'.yellow);
         var parseOpts = {
           auto_parse: true,
           columns: true,
