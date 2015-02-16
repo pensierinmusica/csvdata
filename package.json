@@ -21,7 +21,18 @@
   "homepage": "https://github.com/pensierinmusica/csvdata",
   "dependencies": {
     "colors": "^1.0.3",
+    "commander": "^2.6.0",
     "csv": "^0.4.1",
     "q": "^1.1.2"
+  },
+  "devDependencies": {
+    "chai": "^2.0.0",
+    "chai-as-promised": "^4.2.0",
+    "mocha": "^2.1.0",
+    "q-io": "^1.11.6",
+    "rimraf": "^2.2.8"
+  },
+  "scripts": {
+    "test": "mocha"
   }
 }
