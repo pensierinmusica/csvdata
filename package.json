@@ -1,6 +1,6 @@
 {
   "name": "csvdata",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Async module that loads and writes data operating with CSV files.",
   "main": "csvdata.js",
   "repository": {

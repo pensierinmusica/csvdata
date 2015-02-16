@@ -1,6 +1,6 @@
 # CSVdata
 
-[![Travis](https://img.shields.io/travis/joyent/node.svg)](https://travis-ci.org/pensierinmusica/csvdata)
+[![Travis](https://img.shields.io/travis/pensierinmusica/csvdata.svg)](https://travis-ci.org/pensierinmusica/csvdata)
 [![David](https://img.shields.io/david/pensierinmusica/csvdata.svg)](https://www.npmjs.com/package/csvdata)
 [![npm](https://img.shields.io/npm/v/csvdata.svg)](https://www.npmjs.com/package/csvdata)
 
@@ -119,13 +119,13 @@ The configuration object "options" has the default value: `{empty: true}`. If "e
 
 csvdata.check('./my-file.csv')
 // -> Returns a promise that will be fulfilled with "false".
-// (also logs) 
+// (also logs)
 // - Wrong values on line 3
 // - Empty values on line 4
 
 csvdata.check('./my-file.csv', {empty: true})
 // -> Returns a promise that will be fulfilled with "false".
-// (also logs) 
+// (also logs)
 // - Wrong values on line 3
 ```
 The "check" method can also be executed from the command line.
