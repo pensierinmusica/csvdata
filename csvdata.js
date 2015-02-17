@@ -209,7 +209,7 @@ module.exports = {
 };
 
 // Code for command line usage of the "check" method
-if (process.argv[1].match(/csvdata/)) {
+if (!module.parent) {
 
   var program = require('commander');
 
