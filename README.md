@@ -131,7 +131,7 @@ csvdata.check('./my-file.csv', {empty: true})
 The "check" method can also be executed from the command line.
 
 ```sh
-# You can run it either either as
+# You can run it either as
 node csvdata.js -c <your_file_path.csv>
 
 # Or make the file executable with
