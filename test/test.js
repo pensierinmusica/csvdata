@@ -19,26 +19,14 @@ describe('csvdata', function () {
   var filePath = dirPath + 'test.csv';
   var wrongFilePath = dirPath + 'no-test.csv';
 
-  before(function (done) {
-    // Delete "tmp" folder, if present
-    rimraf(dirPath, function (err) {
-      if (err) return done(err);
-      else {
-        // Make "tmp" folder
-        fs.mkdir(dirPath, function (err) {
-          if (err) return done(err)
-          else done()
-        });
-      }
-    });
+  before(function () {
+    // Make "tmp" folder
+    fs.mkdirSync(dirPath);
   });
 
-  after(function (done) {
+  after(function () {
     // Delete "tmp" folder
-    rimraf(dirPath, function (err) {
-      if (err) return done(err);
-      else done();
-    })
+    rimraf.sync(dirPath);
   });
 
   describe('#load()', function () {
