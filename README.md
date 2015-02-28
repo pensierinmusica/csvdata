@@ -162,7 +162,7 @@ csvdata.check('./my-file.csv')
 // 4 (hair)
 // 5 (age)
 
-csvdata.check('./my-file.csv', {empty: true})
+csvdata.check('./my-file.csv', {emptyValues: false})
 // -> Returns a promise that will be fulfilled with "false".
 // (also logs)
 // - Missing value on line 3
@@ -174,7 +174,7 @@ csvdata.check('./my-file.csv', {duplicates: true})
 // - Duplicate values for "name":
 // "Laura" on line 3, 5
 
-csvdata.check('./my-file.csv', {empty: true, duplicates: true, limit: 'hair,age'})
+csvdata.check('./my-file.csv', {duplicates: true, limit: 'hair,age'})
 // -> Returns a promise that will be fulfilled with "false".
 // (also logs)
 // - Missing value on line 3
