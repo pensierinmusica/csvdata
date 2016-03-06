@@ -25,21 +25,21 @@
   },
   "homepage": "https://github.com/pensierinmusica/csvdata",
   "dependencies": {
-    "colors": "^1.0.3",
-    "commander": "^2.6.0",
-    "csv": "^0.4.1",
-    "firstline": "^1.0.0",
-    "q": "^1.2.0",
-    "through": "^2.3.6"
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "csv": "^0.4.6",
+    "firstline": "^1.1.1",
+    "q": "^1.4.1",
+    "through": "^2.3.8"
   },
   "devDependencies": {
-    "chai": "^2.1.0",
-    "chai-as-promised": "^4.2.0",
-    "coveralls": "^2.11.2",
-    "istanbul": "^0.3.6",
-    "mocha": "^2.1.0",
-    "q-io": "^1.11.6",
-    "rimraf": "^2.2.8"
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.2.0",
+    "coveralls": "^2.11.8",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "q-io": "^1.13.2",
+    "rimraf": "^2.5.2"
   },
   "scripts": {
     "test": "mocha",
