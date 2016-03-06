@@ -29,7 +29,7 @@
     "commander": "^2.9.0",
     "csv": "^0.4.6",
     "firstline": "^1.1.1",
-    "q": "^1.4.1",
+    "js-promisify": "^1.0.3",
     "through": "^2.3.8"
   },
   "devDependencies": {
@@ -38,7 +38,6 @@
     "coveralls": "^2.11.8",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
-    "q-io": "^1.13.2",
     "rimraf": "^2.5.2"
   },
   "scripts": {

@@ -6,7 +6,7 @@
 
 ## Introduction
 
-CSVdata is a [npm](http://npmjs.org) module for [NodeJS](http://nodejs.org/), that **loads, writes, and checks data operating with CSV files**. Based on [node-csv](http://github.com/wdavidw/node-csv) and [q](http://github.com/kriskowal/q), supports promises and streams. It has a simple API, it is well tested and built for high performance.
+CSVdata is a [npm](http://npmjs.org) module for [NodeJS](http://nodejs.org/), that **loads, writes, and checks data operating with CSV files**. Based on [node-csv](http://github.com/wdavidw/node-csv), supports native JS promises and streams (requires Node >= v4.0.0). It has a simple API, it is well tested and built for high performance.
 
 It includes some smart features to try preventing common errors that could compromise data integrity when dealing with CSV (e.g. mixing of values due to a missing entry).
 

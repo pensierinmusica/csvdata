@@ -2,8 +2,8 @@
 
 'use strict';
 
+var promisify = require('js-promisify');
 var fs = require('fs');
-var Q = require('q');
 var csv = require('csv');
 var through = require('through');
 var firstline = require('firstline');
@@ -36,11 +36,11 @@ module.exports = {
     if (opts.stream) {
       return fs.createReadStream(path, {encoding: 'utf8'}).pipe(csv.parse(parseOpts));
     } else {
-      return Q.nfcall(fs.readFile, path, {encoding: 'utf8'})
+      return promisify(fs.readFile, [path, {encoding: 'utf8'}])
         .then(function (data) {
           if (data) {
             console.log('Parsing data...\n'.yellow);
-            return Q.nfcall(csv.parse, data, parseOpts).then(function (data) {
+            return promisify(csv.parse, [data, parseOpts]).then(function (data) {
               console.log('Data parsed\n'.green);
               return data;
             });
@@ -58,7 +58,7 @@ module.exports = {
     };
     setOpts(opts, options);
     header = opts.header;
-    return Q.promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
       var ws = fs.createWriteStream(path, {encoding: 'utf8'});
       ws
         .on('finish', function () {
@@ -234,7 +234,7 @@ module.exports = {
             limit.push(i);
           });
         }
-        return Q.promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
           var rs = module.exports.load(path, {stream: true, _parseOpts: {}});
           result = true;
           count = 1;

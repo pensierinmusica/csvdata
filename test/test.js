@@ -1,10 +1,10 @@
 'use strict';
 
+var promisify = require('js-promisify');
 var chai = require('chai');
 var chaiAsPromised = require("chai-as-promised");
 var should = require('chai').should();
 var fs = require('fs');
-var FS = require("q-io/fs");
 var path = require('path');
 var rimraf = require('rimraf');
 
@@ -33,12 +33,12 @@ describe('csvdata', function () {
 
     before(function () {
       // Make mock CSV file
-      return FS.write(filePath, mocks.fullString);
+      return promisify(fs.writeFile, [filePath, mocks.fullString]);
     });
 
     after(function () {
       // Delete mock CSV file
-      return FS.remove(filePath);
+      return promisify(fs.unlink, [filePath]);
     });
 
     it('should reject if file does not exist', function () {
@@ -73,14 +73,14 @@ describe('csvdata', function () {
 
     afterEach(function () {
       // Delete generated CSV file
-      return FS.remove(filePath);
+      return promisify(fs.unlink, [filePath]);
     });
 
     describe('from string', function () {
       it('should correctly write data to disk', function () {
         return csvdata.write(filePath, mocks.string, {header: mocks.header})
         .then(function () {
-          return FS.read(filePath).should.eventually.equal(mocks.fullString);
+          return promisify(fs.readFile, [filePath, {encoding: 'utf8'}]).should.eventually.equal(mocks.fullString);
         });
       });
 
@@ -101,7 +101,7 @@ describe('csvdata', function () {
       it('should correctly write data to disk', function () {
         return csvdata.write(filePath, mocks.arr, {header: mocks.header})
         .then(function () {
-          return FS.read(filePath).should.eventually.equal(mocks.fullString);
+          return promisify(fs.readFile, [filePath, {encoding: 'utf8'}]).should.eventually.equal(mocks.fullString);
         });
       });
 
@@ -122,7 +122,7 @@ describe('csvdata', function () {
       it('should correctly write data to disk', function () {
         return csvdata.write(filePath, mocks.arrObj, {header: mocks.header})
         .then(function () {
-          return FS.read(filePath).should.eventually.equal(mocks.fullString);
+          return promisify(fs.readFile, [filePath, {encoding: 'utf8'}]).should.eventually.equal(mocks.fullString);
         });
       });
 
@@ -143,7 +143,7 @@ describe('csvdata', function () {
       it('should correctly write data to disk', function () {
         return csvdata.write(filePath, mocks.obj, {header: mocks.header})
         .then(function () {
-          return FS.read(filePath).should.eventually.equal(mocks.fullString);
+          return promisify(fs.readFile, [filePath, {encoding: 'utf8'}]).should.eventually.equal(mocks.fullString);
         });
       });
 
@@ -172,7 +172,7 @@ describe('csvdata', function () {
       it('should respect the column order specified in header', function () {
         return csvdata.write(filePath, mocks.obj, {header: mocks.altHeader})
         .then(function () {
-          return FS.read(filePath).should.eventually.equal(mocks.altFullString);
+          return promisify(fs.readFile, [filePath, {encoding: 'utf8'}]).should.eventually.equal(mocks.altFullString);
         });
       });
     });
@@ -183,109 +183,109 @@ describe('csvdata', function () {
 
     afterEach(function () {
       // Delete mock CSV file
-      return FS.remove(filePath);
+      return promisify(fs.unlink, [filePath]);
     });
 
     it('should reject if file does not exist', function () {
-      return FS.write(filePath, mocks.emptyHeader)
+      return promisify(fs.writeFile, [filePath, mocks.emptyHeader])
       .then(function () {
         return csvdata.check(wrongFilePath).should.be.rejected;
       });
     });
 
     it('should return "true" for consistent data', function () {
-      return FS.write(filePath, mocks.fullString)
+      return promisify(fs.writeFile, [filePath, mocks.fullString])
       .then(function () {
         return csvdata.check(filePath).should.eventually.equal(true);
       });
     });
 
     it('should return "false" when file is empty', function () {
-      return FS.write(filePath, '')
+      return promisify(fs.writeFile, [filePath, ''])
       .then(function () {
         return csvdata.check(filePath).should.eventually.equal(false);
       });
     });
 
     it('should reject if CSV header contains empty values', function () {
-      return FS.write(filePath, mocks.emptyHeader)
+      return promisify(fs.writeFile, [filePath, mocks.emptyHeader])
       .then(function () {
         return csvdata.check(filePath).should.be.rejected;
       });
     });
 
     it('should fulfill if "opts.limit" provides correct values', function () {
-      return FS.write(filePath, mocks.fullString)
+      return promisify(fs.writeFile, [filePath, mocks.fullString])
       .then(function () {
         return csvdata.check(filePath, {limit: mocks.objName}).should.be.fulfilled;
       });
     });
 
     it('should reject if "opts.limit" provides wrong values', function () {
-      return FS.write(filePath, mocks.fullString)
+      return promisify(fs.writeFile, [filePath, mocks.fullString])
       .then(function () {
         return csvdata.check(filePath, {limit: mocks.wrongHeader}).should.be.rejected;
       });
     });
 
     it('should return "false" for data with missing values', function () {
-      return FS.write(filePath, mocks.wrongFullString)
+      return promisify(fs.writeFile, [filePath, mocks.wrongFullString])
       .then(function () {
         return csvdata.check(filePath).should.eventually.equal(false);
       });
     });
 
     it('should return "false" for data with empty values', function () {
-      return FS.write(filePath, mocks.emptyFullString)
+      return promisify(fs.writeFile, [filePath, mocks.emptyFullString])
       .then(function () {
         return csvdata.check(filePath).should.eventually.equal(false);
       });
     });
 
     it('should return "true" for data with empty values when option "{emptyValues: false}"', function () {
-      return FS.write(filePath, mocks.emptyFullString)
+      return promisify(fs.writeFile, [filePath, mocks.emptyFullString])
       .then(function () {
         return csvdata.check(filePath, {emptyValues: false}).should.eventually.equal(true);
       });
     });
 
     it('should return "true" for data with duplicate values', function () {
-      return FS.write(filePath, mocks.dupFullString)
+      return promisify(fs.writeFile, [filePath, mocks.dupFullString])
       .then(function () {
         return csvdata.check(filePath).should.eventually.equal(true);
       });
     });
 
     it('should return "false" for data with duplicate values when option "{duplicates: true}"', function () {
-      return FS.write(filePath, mocks.dupFullString)
+      return promisify(fs.writeFile, [filePath, mocks.dupFullString])
       .then(function () {
         return csvdata.check(filePath, {duplicates: true}).should.eventually.equal(false);
       });
     });
 
     it('should return "true" for data with empty lines', function () {
-      return FS.write(filePath, mocks.fullString + '\n')
+      return promisify(fs.writeFile, [filePath, mocks.fullString + '\n'])
       .then(function () {
         return csvdata.check(filePath).should.eventually.equal(true);
       });
     });
 
     it('should return "false" for data with empty lines when option "{emptyLines: true}"', function () {
-      return FS.write(filePath, mocks.fullString + '\n')
+      return promisify(fs.writeFile, [filePath, mocks.fullString + '\n'])
       .then(function () {
         return csvdata.check(filePath, {emptyLines: true}).should.eventually.equal(false);
       });
     });
 
     it('should return "true" for data with empty values when option "{limit: mocks.objName}"', function () {
-      return FS.write(filePath, mocks.emptyFullString)
+      return promisify(fs.writeFile, [filePath, mocks.emptyFullString])
       .then(function () {
         return csvdata.check(filePath, {limit: mocks.objName}).should.eventually.equal(true);
       });
     });
 
     it('should return "true" for data with duplicate values when option "{limit: mocks.objName}"', function () {
-      return FS.write(filePath, mocks.dupFullString)
+      return promisify(fs.writeFile, [filePath, mocks.dupFullString])
       .then(function () {
         return csvdata.check(filePath, {duplicates: true, limit: mocks.objName}).should.eventually.equal(true);
       });
