@@ -38,13 +38,15 @@
     "coveralls": "^2.11.8",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
-    "rimraf": "^2.5.2"
+    "rimraf": "^2.5.2",
+    "semantic-release": "^4.3.5"
   },
   "engines": {
     "node": ">=4.0.0"
   },
   "scripts": {
     "test": "mocha",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha"
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   }
 }
