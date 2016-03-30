@@ -8,11 +8,11 @@ notifications:
 node_js:
   - node
   - '4.0.0'
-script: 'npm run-script test-travis'
 before_install:
   - npm i -g npm@^2.0.0
 before_script:
   - npm prune
+script: 'npm run-script test-travis'
 after_success:
   - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js'
   - 'curl -Lo travis_after_all.py https://git.io/travis_after_all'
