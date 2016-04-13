@@ -36,7 +36,7 @@ The **"options"** argument is a configuration object  with the following default
 }
 ```
 
-- If "objName" is provided instead (string), the promise will be fulfilled with an "index" object, where keys are based on entries from the column matching "objName", and values contain in turn an object with data from that row (meant to be used when entries in the column "objname" are unique, and faster retrieval is convenient).
+- If "objName" is provided instead (string), the promise will be fulfilled with an "index" object, where keys are based on entries from the column matching "objName", and values contain in turn an object with data from that row (meant to be used when entries in the column "objName" are unique, and faster retrieval is convenient).
 
 - If stream is set to `true`, it returns a [readable stream](http://nodejs.org/api/stream.html#stream_class_stream_readable) that can be piped where needed.
 
