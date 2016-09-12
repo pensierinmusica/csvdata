@@ -54,7 +54,8 @@ module.exports = {
     var opts, header, hlen, i, j, arr, value, entry, obj, key;
     opts = {
       empty: false,
-      header: false
+      header: false,
+      delimiter: ','
     };
     setOpts(opts, options);
     header = opts.header;
@@ -70,14 +71,22 @@ module.exports = {
       console.log(('\nWriting data to ' + path + '\n'));
       if (header) {
         if (typeof header === 'string') {
-          ws.write(header + '\n');
           header = header.split(',');
           hlen = header.length;
-          header.forEach(function (item) {
+          header.every(function (item) {
             if (item.length === 0) {
               throw new Error('Header column titles can not be empty');
             }
           });
+          ws.write(header + '\n');
+        } else if (Object.prototype.toString.call( header ) === '[object Array]') {
+          hlen = header.length;
+          header.every(function (item) {
+            if (item.length === 0) {
+              throw new Error('Header column titles can not be empty');
+            }
+          });
+          ws.write(header.join(opts.delimiter) + '\n');
         } else {
           throw new Error('The header argument must be a string'.red);
         }
@@ -106,7 +115,7 @@ module.exports = {
                     }
                   }
                 }
-                ws.write(arr.join(',') + '\n');
+                ws.write(arr.join(opts.delimiter) + '\n');
               } else {
                 if (arr[0] !== '' || arr.length !== 1) {
                   throw new Error(('Number of values different from first line of CSV\n').red +
@@ -143,7 +152,7 @@ module.exports = {
                                     'Object: ' + JSON.stringify(obj) + '\n');
                   }
                 }
-                ws.write(entry.join(',') + '\n');
+                ws.write(entry.join(opts.delimiter) + '\n');
               } else {
                 throw new Error(('Wrong input in array at index ' + i + '\n').red +
                                 'This item is not an object:\n' + JSON.stringify(obj) + '\n');
@@ -178,7 +187,7 @@ module.exports = {
                                 'Object: ' + JSON.stringify(obj) + '\n');
               }
             }
-            ws.write(entry.join(',') + '\n');
+            ws.write(entry.join(opts.delimiter) + '\n');
           }
         } else {
           throw new Error('When data comes from an object, the header argument must be provided\n'.red);
