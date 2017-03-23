@@ -56,7 +56,7 @@ csvdata.load('./my-file.csv')
 //   {name: 'Boris', hair: 'blonde', age: 28}
 // ]
 
-csvdata.load('./my-file.csv', {objname: 'name'})
+csvdata.load('./my-file.csv', {objName: 'name'})
 // -> Returns a promise that will be fulfilled with:
 {
 //   John: {name: 'John', hair: 'brown', age: 36},
@@ -131,8 +131,8 @@ The **"options"** argument is a configuration object  with the following default
   duplicates: false,
   emptyLines: false,
   emptyValues: true,
-  limit: false
-  log: true;
+  limit: false,
+  log: true
 }
 ```
 
