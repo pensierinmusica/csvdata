@@ -55,5 +55,6 @@
     "firstline": "^1.2.1",
     "js-promisify": "^1.1.0",
     "through": "^2.3.8"
-  }
+  },
+  "version": "0.0.0-development"
 }

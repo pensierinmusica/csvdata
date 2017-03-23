@@ -21,26 +21,32 @@ It includes some smart features to try preventing common errors that could compr
 ## API
 
 #### Load
-`csvdata.load(filepath, [options])`
+`csvdata.load(filePath, [options])`
 
-Reads data from "filepath" (the first line of the CSV file must contain headers).
+Reads data from "filePath" (the first line of the CSV file must contain headers).
 
 Returns a promise, eventually fulfilled with an array where each item is an object that contains data from a row (automatically parses native JS data types).
 
 The **"options"** argument is a configuration object  with the following default values.
 
-```javascript
+```js
 {
+  delimiter: ',',
+  log: true,
   objName: false,
   stream: false
 }
 ```
 
-- If "objName" is provided instead (string), the promise will be fulfilled with an "index" object, where keys are based on entries from the column matching "objName", and values contain in turn an object with data from that row (meant to be used when entries in the column "objName" are unique, and faster retrieval is convenient).
+- `delimiter` (string): set the field delimiter (one character only).
 
-- If stream is set to `true`, it returns a [readable stream](http://nodejs.org/api/stream.html#stream_class_stream_readable) that can be piped where needed.
+- `log` (boolean): if set to `false` disable logs.
 
-```javascript
+- `objName` (string): instead of an array it returns an "index" object, where keys map to each entry in the column titled "objName", and values are objects that contain all data from the corresponding row (meant to be used when entries in the column "objName" are unique, and faster retrieval is convenient).
+
+- `stream` (boolean): if set to `true`, it returns a [readable stream](http://nodejs.org/api/stream.html#stream_class_stream_readable) that can be piped where needed.
+
+```js
 // Imagine the CSV file content is:
 // name,hair,age
 // John,brown,36
@@ -63,13 +69,12 @@ csvdata.load('./my-file.csv', {objName: 'name'})
 //   Laura: {name: 'Laura', hair: 'red', age: 23},
 //   Boris: {name: 'Boris', hair: 'blonde', age: 28}
 // }
-
 ```
 
 #### Write
-`csvdata.write(filepath, data, [options])`
+`csvdata.write(filePath, data, [options])`
 
-Returns a promise, eventually fulfilled when done writing data to "filepath" (be careful, as it overwrites existing files). Data can be provided as:
+Returns a promise, eventually fulfilled when done writing data to "filePath" (be careful, as it overwrites existing files). Data can be provided as:
 
  - String (e.g. `'a,b,c\nd,e,f'`)
  - Array of arrays (e.g. `[['a','b','c'],['d','e','f']]`)
@@ -78,17 +83,24 @@ Returns a promise, eventually fulfilled when done writing data to "filepath" (be
 
 The **"options"** argument is a configuration object  with the following default values.
 
-```javascript
+```js
 {
+  delimiter: ',',
   empty: false,
-  header: false
+  header: false,
+  log: true
 }
 ```
-- If "empty" is set to `true`, "write" will return an error if the dataset contains empty values (i.e. `undefined`, `null`, or `''`).
 
-- If "header" is provided (must be a string), it's written on the first line. If data comes from an object (i.e. last two cases above), "header" **must** be provided to guarantee the correct order of comma separated values, and can be used to **select** which object properties are saved to CSV.
+- `delimiter` (string): set the field delimiter (one character only).
 
-```javascript
+- `empty` (boolean): if set to `true`, return an error when the dataset contains empty values (i.e. `undefined`, `null`, or `''`).
+
+- `header` (string): if provided it's written on the first line. If data comes from an object (i.e. last two cases above), "header" **must** be provided to guarantee the correct order of comma separated values, and can be used to **select** which object properties are saved to CSV.
+
+- `log` (boolean): if set to `false` disable logs.
+
+```js
 var data = [
   {name: 'John', hair: 'brown', age: 36},
   {name: 'Laura', hair: 'red', age: 23},
@@ -118,7 +130,7 @@ csvdata.write('./my-file.csv', data, {empty: true, header: 'name,hair,age'})
 ```
 
 #### Check
-`csvdata.check(filepath, [options])`
+`csvdata.check(filePath, [options])`
 
 Checks data integrity of the CSV file. It can look for missing, empty, and duplicate values within columns, or detect empty lines.
 
@@ -126,8 +138,9 @@ Returns a promise, eventually fulfilled with `true` if the check is ok, or `fals
 
 The **"options"** argument is a configuration object  with the following default values.
 
-```javascript
+```js
 {
+  delimiter: ',',
   duplicates: false,
   emptyLines: false,
   emptyValues: true,
@@ -136,16 +149,21 @@ The **"options"** argument is a configuration object  with the following default
 }
 ```
 
-- If "duplicates" is set to `true`, it checks for duplicate values within columns.
-- If "emptyLines" is set to `true`, it checks for empty lines.
-- If "emptyValues" is set to `true` it checks for empty values, if set to `false` it considers empty values fine, but still complains for missing values.
-- If "limit" is provided (must be a string, containing comma separated column headers), it limits the "duplicates" and "emptyValues" checks to a subset of columns (according to the nature of CSV format, missing values and empty lines can only be checked for the whole file instead).
-- If "log" is set to `false`, only the final result is returned. The process becomes faster and requires less memory (as it doesn't need to keep track of where the problems occur).
+- `delimiter` (string): set the field delimiter (one character only).
+
+- `duplicates` (boolean): check for duplicate values within columns.
+
+- `emptyLines` (boolean) check for empty lines.
+
+- `emptyValues` (boolean) check for empty values. If set to `false` it considers empty values fine, but still complains for missing values.
+
+- `limit` (string): comma separated column headers, if provided limit the "duplicates" and "emptyValues" checks to a subset of columns (instead missing values and empty lines can only be checked for the whole file, due to the CSV format).
+
+- `log` (boolean): if set to `false`, only the final result is returned. The process becomes faster and requires less memory (as it doesn't need to keep track of where the problems occur).
 
 Note that checking for duplicate values requires to load the selected CSV content in memory, as the program needs to have a reference to previous values (this might be an issue if you're dealing with very large files, that exceed your available memory).
 
-
-```javascript
+```js
 // Imagine the CSV file content is:
 // name,hair,age
 // John,brown,36
@@ -186,6 +204,7 @@ csvdata.check('./my-file.csv', {log: false})
 // -> Returns a promise that will be fulfilled with "false".
 // Not logging is faster if you need just the final result.
 ```
+
 The "check" method can also be executed from the command line.
 
 ```sh
