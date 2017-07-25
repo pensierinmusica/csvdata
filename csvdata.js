@@ -17,11 +17,14 @@ exports.load = function load (path, usrOpts) {
   };
   Object.assign(opts, usrOpts);
   const parseOpts = opts._parseOpts || { // "_parseOpts" is a private option, used for the "check()" method
-    auto_parse: true,
-    columns: true,
+    auto_parse: opts.auto_parse != null ? opts.auto_parse : true,
+    columns: opts.columns || true,
     delimiter: opts.delimiter,
     objname: opts.objName,
-    skip_empty_lines: true
+    quote: opts.quote,
+    skip_empty_lines: true,
+    relax_column_count: opts.relax_column_count,
+    trim: opts.trim
   };
   const log = opts.log;
   log && console.log(`\nReading data from ${path}\n`);
