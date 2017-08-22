@@ -23,6 +23,7 @@ exports.load = function load (path, usrOpts) {
     objname: opts.objName,
     quote: opts.quote,
     skip_empty_lines: true,
+    relax: opts.relax,
     relax_column_count: opts.relax_column_count,
     trim: opts.trim
   };
