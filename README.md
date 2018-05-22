@@ -1,12 +1,12 @@
 # CSVdata
 
-[![Travis](https://img.shields.io/travis/pensierinmusica/csvdata.svg)](https://travis-ci.org/pensierinmusica/csvdata)
+[![Travis](https://img.shields.io/travis/pensierinmusica/csvdata.svg)](https://travis-ci.com/pensierinmusica/csvdata)
 [![David](https://img.shields.io/david/pensierinmusica/csvdata.svg)](https://www.npmjs.com/package/csvdata)
 [![npm](https://img.shields.io/npm/v/csvdata.svg)](https://www.npmjs.com/package/csvdata)
 
 ## Introduction
 
-CSVdata is a [npm](http://npmjs.org) module for [NodeJS](http://nodejs.org/), that **loads, writes, and checks data operating with CSV files**. Based on [node-csv](http://github.com/wdavidw/node-csv), supports native JS promises and streams (requires Node >= v4.0.0). It has a simple API, it is well tested and built for high performance.
+CSVdata is a [npm](http://npmjs.org) module for [NodeJS](http://nodejs.org/), that **loads, writes, and checks data operating with CSV files**. Based on [node-csv](http://github.com/wdavidw/node-csv), supports native JS promises and streams (requires Node >= v6.4.0). It has a simple API, it is well tested and built for high performance.
 
 It includes some smart features to try preventing common errors that could compromise data integrity when dealing with CSV (e.g. mixing of values due to a missing entry).
 
