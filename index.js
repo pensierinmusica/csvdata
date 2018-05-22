@@ -7,7 +7,7 @@ const fs = require('fs');
 const csv = require('csv');
 const through = require('through');
 const firstline = require('firstline');
-const colors = require('colors');
+require('colors');
 
 exports.load = function load (path, usrOpts) {
   const opts = {
@@ -29,10 +29,10 @@ exports.load = function load (path, usrOpts) {
     return fs.createReadStream(path, {encoding: 'utf8'}).pipe(csv.parse(parseOpts));
   } else {
     return promisify(fs.readFile, [path, {encoding: 'utf8'}])
-      .then(function (data) {
+      .then(data => {
         if (data) {
           log && console.log('Parsing data...\n'.yellow);
-          return promisify(csv.parse, [data, parseOpts]).then(function (data) {
+          return promisify(csv.parse, [data, parseOpts]).then(data => {
             log && console.log('Data parsed\n'.green);
             return data;
           });
@@ -55,13 +55,13 @@ exports.write = function write (path, data, usrOpts) {
   const log = opts.log;
   let header = opts.header;
   let hlen;
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     const ws = fs.createWriteStream(path, {encoding: 'utf8'});
     ws
-      .on('finish', function () {
+      .on('finish', () => {
         resolve();
       })
-      .on('error', function (err) {
+      .on('error', err => {
         reject(err);
       });
     if (delimiter.length > 1) throw new Error('The delimiter can only be one character'.red);
@@ -71,7 +71,7 @@ exports.write = function write (path, data, usrOpts) {
         ws.write(header + '\n');
         header = header.split(delimiter);
         hlen = header.length;
-        header.forEach(function (item) {
+        header.forEach(item => {
           if (item.length === 0) throw new Error('Header column titles can not be empty'.red);
         });
       } else {
@@ -153,7 +153,7 @@ exports.write = function write (path, data, usrOpts) {
     } else if (typeof data === 'object') {
       // It's an object (containing objects?)
       if (header) {
-        var objIndex = Object.keys(data);
+        const objIndex = Object.keys(data);
         for (let i = 0; i < objIndex.length; i++) {
           let obj = data[objIndex[i]];
           let entry = [];
@@ -205,15 +205,15 @@ exports.check = function check (path, usrOpts) {
   let limit;
   const log = opts.log;
   return firstline(path)
-    .then(function (line) {
+    .then(line => {
       let cols = line.split(opts.delimiter);
       if (cols.length === 1 && cols[0] === '') {
         log && console.log(`\nReading data from ${path}\n\nFile appears to be empty!\n`.yellow);
         return false;
       }
-      cols.forEach(function (col) {
+      cols.forEach(col => {
         if (col === '') {
-          let err = 'The CSV header contains empty values\n'.red
+          let err = 'The CSV header contains empty values\n'.red;
           log && !module.parent && console.error(err);
           throw new Error(err);
         }
@@ -221,7 +221,7 @@ exports.check = function check (path, usrOpts) {
       let hlen = cols.length;
       if (opts.limit) {
         limit = [];
-        opts.limit.split(',').forEach(function (col) {
+        opts.limit.split(',').forEach(col => {
           let i = cols.indexOf(col);
           if (i === -1) {
             let err = (`The column value "${col}" does not correpond to CSV headers\n`).red +
@@ -232,7 +232,7 @@ exports.check = function check (path, usrOpts) {
           limit.push(i);
         });
       }
-      return new Promise(function (resolve, reject) {
+      return new Promise((resolve, reject) => {
         var rs = exports.load(path, {
           stream: true,
           _parseOpts: {
@@ -253,7 +253,7 @@ exports.check = function check (path, usrOpts) {
           // "map" is where duplicates coordinates are actually stored.
           duplicates = [];
           if (limit) {
-            limit.forEach(function (col) {
+            limit.forEach(col => {
               duplicates[col] = [{},{}];
             });
           } else {
@@ -316,7 +316,7 @@ exports.check = function check (path, usrOpts) {
         }
         rs
           .pipe(through(check))
-          .on('end', function () {
+          .on('end', () => {
             if (result) {
               log && console.log('\nFile looks ok.\n'.green);
             } else {
@@ -350,7 +350,7 @@ exports.check = function check (path, usrOpts) {
             }
             resolve(result);
           })
-          .on('error', function (err) {
+          .on('error', err => {
             log && !module.parent && console.error(err);
             reject(err);
           });
@@ -361,7 +361,7 @@ exports.check = function check (path, usrOpts) {
 // Code for command line usage of the "check" method
 if (!module.parent) {
 
-  var program = require('commander');
+  const program = require('commander');
 
   program
     .usage('[options] <file ...>')
@@ -374,7 +374,7 @@ if (!module.parent) {
     .parse(process.argv);
 
   if (typeof program.check === 'string' && program.check[0] !== '-' && program.check.length !== 0) {
-    var options = {
+    const options = {
       duplicates: program.duplicates,
       emptyValues: !program.emptyValues,
       emptyLines: program.emptyLines,
