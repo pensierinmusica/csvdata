@@ -27,7 +27,7 @@ describe('csvdata', () => {
 
     beforeEach(() => promisify(fs.writeFile, [filePath, mocks.fullString])); // Make mock CSV file
 
-    after(() => promisify(fs.unlink, [filePath])); // Delete mock CSV file
+    after(() => rimraf.sync(filePath)); // Delete mock CSV file
 
     it(
       'should reject if file does not exist',
@@ -70,7 +70,7 @@ describe('csvdata', () => {
 
   describe('#write()', () => {
 
-    afterEach(() => promisify(fs.unlink, [filePath])); // Delete generated CSV file
+    afterEach(() => rimraf.sync(filePath)); // Delete generated CSV file
 
     describe('from string', () => {
 
@@ -225,7 +225,7 @@ describe('csvdata', () => {
 
   describe('#check', () => {
 
-    afterEach(() => promisify(fs.unlink, [filePath])); // Delete mock CSV file
+    afterEach(() => rimraf.sync(filePath)); // Delete mock CSV file
 
     it(
       'should reject if file does not exist',

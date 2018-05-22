@@ -11,6 +11,7 @@ require('colors');
 
 exports.load = function load (path, usrOpts) {
   const opts = {
+    delimiter: ',',
     encoding: 'utf8',
     log: true,
     objName: false,
@@ -25,6 +26,7 @@ exports.load = function load (path, usrOpts) {
     skip_empty_lines: true
   };
   const log = opts.log;
+  if (opts.delimiter.length > 1) throw new Error('The delimiter can only be one character'.red);
   log && console.log(`\nReading data from ${path}\n`);
   if (opts.stream) {
     return fs.createReadStream(path, {encoding: opts.encoding}).pipe(csv.parse(parseOpts));
@@ -33,10 +35,11 @@ exports.load = function load (path, usrOpts) {
       .then(data => {
         if (data) {
           log && console.log('Parsing data...\n'.yellow);
-          return promisify(csv.parse, [data, parseOpts]).then(data => {
-            log && console.log('Data parsed\n'.green);
-            return data;
-          });
+          return promisify(csv.parse, [data, parseOpts])
+            .then(data => {
+              log && console.log('Data parsed\n'.green);
+              return data;
+            });
         } else {
           log && console.log('File appears to be empty!\n'.yellow);
         }
@@ -58,15 +61,11 @@ exports.write = function write (path, data, usrOpts) {
   let header = opts.header;
   let hlen;
   return new Promise((resolve, reject) => {
+    if (delimiter.length > 1) throw new Error('The delimiter can only be one character'.red);
     const ws = fs.createWriteStream(path, {encoding: opts.encoding});
     ws
-      .on('finish', () => {
-        resolve();
-      })
-      .on('error', err => {
-        reject(err);
-      });
-    if (delimiter.length > 1) throw new Error('The delimiter can only be one character'.red);
+      .on('finish', () => resolve())
+      .on('error', err => reject(err));
     log && console.log((`\nWriting data to ${path}\n`));
     if (header) {
       if (typeof header === 'string') {
@@ -200,13 +199,14 @@ exports.check = function check (path, usrOpts) {
     duplicates: false,
     emptyLines: false,
     emptyValues: true,
+    encoding: 'utf8',
     limit: false,
     log: true
   };
   Object.assign(opts, usrOpts);
   let limit;
   const log = opts.log;
-  return firstline(path)
+  return firstline(path, {encoding: opts.encoding})
     .then(line => {
       let cols = line.split(opts.delimiter);
       if (cols.length === 1 && cols[0] === '') {
@@ -235,7 +235,8 @@ exports.check = function check (path, usrOpts) {
         });
       }
       return new Promise((resolve, reject) => {
-        var rs = exports.load(path, {
+        const rs = exports.load(path, {
+          encoding: opts.encoding,
           stream: true,
           _parseOpts: {
             relax_column_count: true,

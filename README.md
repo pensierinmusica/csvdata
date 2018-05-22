@@ -32,6 +32,7 @@ The **"options"** argument is a configuration object  with the following default
 ```js
 {
   delimiter: ',',
+  encoding: 'utf8',
   log: true,
   objName: false,
   stream: false
@@ -39,6 +40,8 @@ The **"options"** argument is a configuration object  with the following default
 ```
 
 - `delimiter` (string): set the field delimiter (one character only).
+
+- `encoding` (string): set the file encoding (must be [supported by Node.js](https://nodejs.org/api/buffer.html#buffer_buffers_and_character_encodings)).
 
 - `log` (boolean): if set to `false` disable logs.
 
@@ -64,7 +67,7 @@ csvdata.load('./my-file.csv')
 
 csvdata.load('./my-file.csv', {objName: 'name'})
 // -> Returns a promise that will be fulfilled with:
-{
+// {
 //   John: {name: 'John', hair: 'brown', age: 36},
 //   Laura: {name: 'Laura', hair: 'red', age: 23},
 //   Boris: {name: 'Boris', hair: 'blonde', age: 28}
@@ -87,6 +90,7 @@ The **"options"** argument is a configuration object  with the following default
 {
   delimiter: ',',
   empty: false,
+  encoding: 'utf8',
   header: false,
   log: true
 }
@@ -95,6 +99,8 @@ The **"options"** argument is a configuration object  with the following default
 - `delimiter` (string): set the field delimiter (one character only).
 
 - `empty` (boolean): if set to `true`, return an error when the dataset contains empty values (i.e. `undefined`, `null`, or `''`).
+
+- `encoding` (string): set the file encoding (must be [supported by Node.js](https://nodejs.org/api/buffer.html#buffer_buffers_and_character_encodings)).
 
 - `header` (string): if provided it's written on the first line. If data comes from an object (i.e. last two cases above), "header" **must** be provided to guarantee the correct order of comma separated values, and can be used to **select** which object properties are saved to CSV.
 
@@ -144,6 +150,7 @@ The **"options"** argument is a configuration object  with the following default
   duplicates: false,
   emptyLines: false,
   emptyValues: true,
+  encoding: 'utf8',
   limit: false,
   log: true
 }
@@ -156,6 +163,8 @@ The **"options"** argument is a configuration object  with the following default
 - `emptyLines` (boolean) check for empty lines.
 
 - `emptyValues` (boolean) check for empty values. If set to `false` it considers empty values fine, but still complains for missing values.
+
+- `encoding` (string): set the file encoding (must be [supported by Node.js](https://nodejs.org/api/buffer.html#buffer_buffers_and_character_encodings)).
 
 - `limit` (string): comma separated column headers, if provided limit the "duplicates" and "emptyValues" checks to a subset of columns (instead missing values and empty lines can only be checked for the whole file, due to the CSV format).
 
