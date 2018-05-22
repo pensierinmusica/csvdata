@@ -49,6 +49,7 @@ exports.load = function load (path, usrOpts) {
 
 exports.write = function write (path, data, usrOpts) {
   const opts = {
+    append: false,
     delimiter: ',',
     encoding: 'utf8',
     empty: false,
@@ -62,14 +63,14 @@ exports.write = function write (path, data, usrOpts) {
   let hlen;
   return new Promise((resolve, reject) => {
     if (delimiter.length > 1) throw new Error('The delimiter can only be one character'.red);
-    const ws = fs.createWriteStream(path, {encoding: opts.encoding});
+    const ws = fs.createWriteStream(path, {encoding: opts.encoding, flags: opts.append ? 'a' : 'w'});
     ws
       .on('finish', () => resolve())
       .on('error', err => reject(err));
     log && console.log((`\nWriting data to ${path}\n`));
     if (header) {
       if (typeof header === 'string') {
-        ws.write(header + '\n');
+        if (!opts.append) ws.write(header + '\n');
         header = header.split(delimiter);
         hlen = header.length;
         header.forEach(item => {

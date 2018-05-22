@@ -219,6 +219,13 @@ describe('csvdata', () => {
           .then(() => promisify(fs.readFile, [filePath, {encoding: 'utf8'}]).should.eventually.equal(mocks.altFullString))
       );
 
+      it(
+        'should allow to append data to an existing file',
+        () => csvdata.write(filePath, mocks.obj, {header: mocks.header})
+          .then(() => csvdata.write(filePath, mocks.obj, {append: true, header: mocks.header}))
+          .then(() => promisify(fs.readFile, [filePath, {encoding: 'utf8'}]).should.eventually.equal(mocks.fullString + mocks.string))
+      );
+
     });
 
   });

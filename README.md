@@ -88,6 +88,7 @@ The **"options"** argument is a configuration object  with the following default
 
 ```js
 {
+  append: 'false',
   delimiter: ',',
   empty: false,
   encoding: 'utf8',
@@ -96,11 +97,13 @@ The **"options"** argument is a configuration object  with the following default
 }
 ```
 
+- `append` (boolean): whether to create a new file or append data to an existing one.
+
 - `delimiter` (string): set the field delimiter (one character only).
 
 - `empty` (boolean): if set to `true`, return an error when the dataset contains empty values (i.e. `undefined`, `null`, or `''`).
 
-- `encoding` (string): set the file encoding (must be [supported by Node.js](https://nodejs.org/api/buffer.html#buffer_buffers_and_character_encodings)).
+- `encoding` (string): set the [file encoding](https://nodejs.org/api/buffer.html#buffer_buffers_and_character_encodings).
 
 - `header` (string): if provided it's written on the first line. If data comes from an object (i.e. last two cases above), "header" **must** be provided to guarantee the correct order of comma separated values, and can be used to **select** which object properties are saved to CSV.
 
