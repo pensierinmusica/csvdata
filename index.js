@@ -11,6 +11,7 @@ require('colors');
 
 exports.load = function load (path, usrOpts) {
   const opts = {
+    encoding: 'utf8',
     log: true,
     objName: false,
     stream: false
@@ -26,9 +27,9 @@ exports.load = function load (path, usrOpts) {
   const log = opts.log;
   log && console.log(`\nReading data from ${path}\n`);
   if (opts.stream) {
-    return fs.createReadStream(path, {encoding: 'utf8'}).pipe(csv.parse(parseOpts));
+    return fs.createReadStream(path, {encoding: opts.encoding}).pipe(csv.parse(parseOpts));
   } else {
-    return promisify(fs.readFile, [path, {encoding: 'utf8'}])
+    return promisify(fs.readFile, [path, {encoding: opts.encoding}])
       .then(data => {
         if (data) {
           log && console.log('Parsing data...\n'.yellow);
@@ -46,6 +47,7 @@ exports.load = function load (path, usrOpts) {
 exports.write = function write (path, data, usrOpts) {
   const opts = {
     delimiter: ',',
+    encoding: 'utf8',
     empty: false,
     header: false,
     log: true
@@ -56,7 +58,7 @@ exports.write = function write (path, data, usrOpts) {
   let header = opts.header;
   let hlen;
   return new Promise((resolve, reject) => {
-    const ws = fs.createWriteStream(path, {encoding: 'utf8'});
+    const ws = fs.createWriteStream(path, {encoding: opts.encoding});
     ws
       .on('finish', () => {
         resolve();

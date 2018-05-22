@@ -1,6 +1,7 @@
 # npm
+package-lock.json
 node_modules
 *.log
 
 # test
-coverage
+.nyc_output

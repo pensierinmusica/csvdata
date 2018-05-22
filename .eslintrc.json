@@ -6,7 +6,6 @@
   },
   "extends": "eslint:recommended",
   "parserOptions": {"sourceType": "module"},
-  "plugins": ["json"],
   "rules": {
     "indent": ["error", 2],
     "keyword-spacing": "error",
