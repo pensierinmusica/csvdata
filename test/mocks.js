@@ -21,6 +21,11 @@ module.exports = {
     { name: 'Laura', hair: 'red', age: 23 },
     { name: 'Boris', hair: 'blonde', age: 28 }
   ],
+  arrStrObj: [
+    { name: 'John', hair: 'brown', age: '36' },
+    { name: 'Laura', hair: 'red', age: '23' },
+    { name: 'Boris', hair: 'blonde', age: '28' }
+  ],
   wrongArrObj: [
     { name: 'John', hair: 'brown', age: 36 },
     { name: 'Laura', age: 23 }, // missing "hair" value

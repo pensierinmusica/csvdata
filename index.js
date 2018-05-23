@@ -15,11 +15,12 @@ exports.load = function load (path, usrOpts) {
     encoding: 'utf8',
     log: true,
     objName: false,
+    parse: true,
     stream: false
   };
   Object.assign(opts, usrOpts);
   const parseOpts = opts._parseOpts || { // "_parseOpts" is a private option, used for the "check()" method
-    auto_parse: true,
+    cast: opts.parse,
     columns: true,
     delimiter: opts.delimiter,
     objname: opts.objName,

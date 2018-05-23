@@ -45,19 +45,24 @@ describe('csvdata', () => {
     );
 
     it(
-      'should correctly parse data',
+      'should correctly load and parse data',
       () => csvdata.load(filePath).should.eventually.eql(mocks.arrObj)
     );
 
     it(
-      'should correctly parse data with a different delimiter',
+      'should correctly load data with when specifying a custom delimiter',
       () => promisify(fs.writeFile, [filePath, mocks.altDelimiterFullString])
         .then(() => csvdata.load(filePath, {delimiter: mocks.altDelimiter}).should.eventually.eql(mocks.arrObj))
     );
 
     it(
-      `should correctly parse data when {objName: "${mocks.objName}"}`,
+      'should correctly load data when when specifying a custom objName',
       () => csvdata.load(filePath, {objName: mocks.objName}).should.eventually.eql(mocks.obj)
+    );
+
+    it(
+      'should not parse data when parsing is disabled',
+      () => csvdata.load(filePath, {parse: false}).should.eventually.eql(mocks.arrStrObj)
     );
 
     it(

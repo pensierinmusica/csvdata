@@ -1,6 +1,7 @@
 # CSVdata
 
 [![Travis](https://img.shields.io/travis/pensierinmusica/csvdata.svg)](https://travis-ci.com/pensierinmusica/csvdata)
+[![Coveralls](https://img.shields.io/coveralls/pensierinmusica/csvdata.svg)](https://coveralls.io/r/pensierinmusica/csvdata)
 [![David](https://img.shields.io/david/pensierinmusica/csvdata.svg)](https://www.npmjs.com/package/csvdata)
 [![npm](https://img.shields.io/npm/v/csvdata.svg)](https://www.npmjs.com/package/csvdata)
 
@@ -16,7 +17,7 @@ It includes some smart features to try preventing common errors that could compr
 
 (add "--save" if you want the module to be automatically added to your project's "package.json" dependencies)
 
-`var csvdata = require(csvdata)`
+`const csvdata = require(csvdata)`
 
 ## API
 
@@ -35,6 +36,7 @@ The **"options"** argument is a configuration object  with the following default
   encoding: 'utf8',
   log: true,
   objName: false,
+  parse: true,
   stream: false
 }
 ```
@@ -46,6 +48,8 @@ The **"options"** argument is a configuration object  with the following default
 - `log` (boolean): if set to `false` disable logs.
 
 - `objName` (string): instead of an array it returns an "index" object, where keys map to each entry in the column titled "objName", and values are objects that contain all data from the corresponding row (meant to be used when entries in the column "objName" are unique, and faster retrieval is convenient).
+
+- `parse` (boolean): whether to automatically parse data to native JS types or not (e.g. it would convert the string '07.23' to the number '7.23').
 
 - `stream` (boolean): if set to `true`, it returns a [readable stream](http://nodejs.org/api/stream.html#stream_class_stream_readable) that can be piped where needed.
 
