@@ -7,7 +7,6 @@ notifications:
 node_js:
   - node
   - '6.4.0'
-script: 'npm run test-travis'
 after_success:
   - npm run coverage
   - npm run travis-deploy-once "npm run semantic-release"
