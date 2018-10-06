@@ -2,6 +2,7 @@
   "name": "csvdata",
   "description": "Async npm module for Node JS that loads, writes, and checks data operating with CSV files.",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint .",

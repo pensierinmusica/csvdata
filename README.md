@@ -92,7 +92,7 @@ The **"options"** argument is a configuration object  with the following default
 
 ```js
 {
-  append: 'false',
+  append: false,
   delimiter: ',',
   empty: false,
   encoding: 'utf8',
