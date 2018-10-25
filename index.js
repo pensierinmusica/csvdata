@@ -54,7 +54,7 @@ exports.write = function write (path, data, usrOpts) {
     delimiter: ',',
     encoding: 'utf8',
     empty: false,
-    header: false,
+    header: '',
     log: true
   };
   Object.assign(opts, usrOpts);

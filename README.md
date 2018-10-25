@@ -96,7 +96,7 @@ The **"options"** argument is a configuration object  with the following default
   delimiter: ',',
   empty: false,
   encoding: 'utf8',
-  header: false,
+  header: '',
   log: true
 }
 ```
