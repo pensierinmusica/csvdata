@@ -26,7 +26,7 @@ declare module 'csvdata' {
     export interface WriteOptions {
         readonly log?: boolean;
         readonly empty?: boolean;
-        readonly header?: boolean;
+        readonly header?: string;
         readonly append?: boolean;
         readonly delimiter?: string;
         readonly encoding?: Encoding;
