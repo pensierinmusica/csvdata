@@ -239,6 +239,7 @@ exports.check = function check (path, usrOpts) {
       return new Promise((resolve, reject) => {
         const rs = exports.load(path, {
           encoding: opts.encoding,
+          log: opts.log,
           stream: true,
           _parseOpts: {
             relax_column_count: true,
