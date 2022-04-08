@@ -16,4 +16,4 @@ jobs:
           command: npm run coverage
       - run:
           name: release
-          command: npm run semantic-release
+          command: npm run semantic-release || true
