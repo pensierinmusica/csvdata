@@ -1,6 +1,6 @@
 # CSVdata
 
-[![Travis](https://img.shields.io/travis/pensierinmusica/csvdata.svg)](https://travis-ci.com/pensierinmusica/csvdata)
+[![CircleCI](https://img.shields.io/circleci/build/github/pensierinmusica/csvdata)](https://app.circleci.com/pipelines/github/pensierinmusica/csvdata)
 [![Coveralls](https://img.shields.io/coveralls/pensierinmusica/csvdata.svg)](https://coveralls.io/r/pensierinmusica/csvdata)
 [![npm](https://img.shields.io/npm/v/csvdata.svg)](https://www.npmjs.com/package/csvdata)
 
