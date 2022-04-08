@@ -11,6 +11,7 @@
     "keyword-spacing": "error",
     "linebreak-style": "error",
     "no-console": 0,
+    "no-prototype-builtins": 0,
     "quotes": ["error","single"],
     "semi": "error",
     "space-before-blocks": "error",

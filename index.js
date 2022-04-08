@@ -14,7 +14,7 @@ exports.load = function load (path, usrOpts) {
     delimiter: ',',
     encoding: 'utf8',
     log: true,
-    objName: false,
+    objName: undefined,
     parse: true,
     stream: false
   };
@@ -375,18 +375,21 @@ if (!module.parent) {
     .option('-e, --empty-values', 'Accept empty values')
     .option('-l, --limit <comma separated column names>', 'Limit CSV checking to specific column(s)')
     .option('-s, --log', 'Avoid logging and speed up')
-    .option('-x, --empty-lines', 'Check for empty lines')
-    .parse(process.argv);
+    .option('-x, --empty-lines', 'Check for empty lines');
 
-  if (typeof program.check === 'string' && program.check[0] !== '-' && program.check.length !== 0) {
-    const options = {
-      duplicates: program.duplicates,
-      emptyValues: !program.emptyValues,
-      emptyLines: program.emptyLines,
-      limit: program.limit,
-      log: !program.log
+  program.parse();
+
+  const opts = program.opts();
+
+  if (typeof opts.check === 'string' && opts.check[0] !== '-' && opts.check.length !== 0) {
+    const optsObj = {
+      duplicates: opts.duplicates,
+      emptyValues: !opts.emptyValues,
+      emptyLines: opts.emptyLines,
+      limit: opts.limit,
+      log: !opts.log
     };
-    exports.check(program.check, options);
+    exports.check(opts.check, optsObj);
   } else {
     program.help();
   }

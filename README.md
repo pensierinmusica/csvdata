@@ -17,7 +17,7 @@ It includes some smart features to try preventing common errors that could compr
 
 (add "--save" if you want the module to be automatically added to your project's "package.json" dependencies)
 
-`const csvdata = require(csvdata)`
+`const csvdata = require('csvdata')`
 
 ## API
 
@@ -35,7 +35,7 @@ The **"options"** argument is a configuration object  with the following default
   delimiter: ',',
   encoding: 'utf8',
   log: true,
-  objName: false,
+  objName: undefined,
   parse: true,
   stream: false
 }

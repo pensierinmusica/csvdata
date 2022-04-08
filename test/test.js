@@ -50,13 +50,13 @@ describe('csvdata', () => {
     );
 
     it(
-      'should correctly load data with when specifying a custom delimiter',
+      'should correctly load data when specifying a custom delimiter',
       () => promisify(fs.writeFile, [filePath, mocks.altDelimiterFullString])
         .then(() => csvdata.load(filePath, {delimiter: mocks.altDelimiter}).should.eventually.eql(mocks.arrObj))
     );
 
     it(
-      'should correctly load data when when specifying a custom objName',
+      'should correctly load data when specifying a custom objName',
       () => csvdata.load(filePath, {objName: mocks.objName}).should.eventually.eql(mocks.obj)
     );
 
@@ -68,7 +68,8 @@ describe('csvdata', () => {
     it(
       'should return a stream when {stream: true}',
       done => csvdata.load(filePath, {stream: true})
-        .on('readable', () => done())
+        .on('readable', done)
+        .end()
     );
 
   });
