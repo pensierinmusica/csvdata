@@ -2,7 +2,6 @@
 
 [![Travis](https://img.shields.io/travis/pensierinmusica/csvdata.svg)](https://travis-ci.com/pensierinmusica/csvdata)
 [![Coveralls](https://img.shields.io/coveralls/pensierinmusica/csvdata.svg)](https://coveralls.io/r/pensierinmusica/csvdata)
-[![David](https://img.shields.io/david/pensierinmusica/csvdata.svg)](https://www.npmjs.com/package/csvdata)
 [![npm](https://img.shields.io/npm/v/csvdata.svg)](https://www.npmjs.com/package/csvdata)
 
 ## Introduction
